@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFun - Login / Register</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .auth-container {
+            max-width: 450px;
+            margin: 6rem auto;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+
+        .form-group {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        input {
+            background: var(--bg-dark);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 1rem;
+            border-radius: 0.75rem;
+            color: white;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+        }
+
+        .toggle-auth {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .toggle-auth span {
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">FOCUSFUN</div>
+        </header>
+
+        <main class="auth-container glass-morphism">
+            <h1 id="auth-title">Welcome Back</h1>
+            <p id="auth-subtitle" style="color: var(--text-muted); margin-top: 0.5rem;">Log in to continue your focus
+                journey</p>
+
+            <form class="auth-form" id="auth-form">
+                <div class="form-group" id="username-group" style="display: none;">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Choose a username">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <div id="error-display" class="error-msg"></div>
+
+                <button type="submit" class="btn btn-primary" id="submit-btn"
+                    style="width: 100%; margin-top: 1rem;">Login</button>
+            </form>
+
+            <div class="toggle-auth">
+                <span id="toggle-text">Don't have an account? <span id="toggle-btn">Register</span></span>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

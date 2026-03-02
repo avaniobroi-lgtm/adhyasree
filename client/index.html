@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFun - Level Up Your Learning</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">FOCUSFUN</div>
+            <nav id="user-nav">
+                <!-- Will be populated by Auth state -->
+                <button class="btn btn-secondary">Login</button>
+            </nav>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="timer">Study Timer</button>
+            <button class="tab-btn" data-tab="dashboard">Dashboard</button>
+            <button class="tab-btn" data-tab="quiz">Quest Game</button>
+            <button class="tab-btn" data-tab="leaderboard">Hall of Fame</button>
+        </div>
+
+        <main id="main-content">
+            <!-- Timer Section -->
+            <section id="timer-tab" class="timer-section">
+                <div class="timer-settings">
+                    <button class="setting-chip active" data-time="25">25:00</button>
+                    <button class="setting-chip" data-time="50">50:00</button>
+                    <button class="setting-chip" data-time="5">Short Break</button>
+                    <button class="setting-chip" data-time="15">Long Break</button>
+                </div>
+
+                <div class="timer-display" id="display">25:00</div>
+
+                <div class="timer-controls">
+                    <button id="start-btn" class="btn btn-primary">Start Focus</button>
+                    <button id="reset-btn" class="btn btn-secondary">Reset</button>
+                </div>
+
+                <div id="focus-status" style="margin-top: 2rem; color: var(--text-muted); opacity: 0;">
+                    Focus mode active. Don't leave this page!
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/timer.js"></script>
+</body>
+
+</html>

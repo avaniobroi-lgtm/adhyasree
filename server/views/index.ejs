@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFun - Level Up Your Learning</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">⚡ FOCUSFUN</div>
+            <nav id="user-nav">
+                <button class="btn btn-secondary" onclick="window.location.href='/auth'">Login</button>
+            </nav>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="timer">⏱ Study Timer</button>
+            <button class="tab-btn" data-tab="dashboard">📊 Dashboard</button>
+            <button class="tab-btn" data-tab="quiz">🎮 Quest Game</button>
+            <button class="tab-btn" data-tab="social">👥 Social</button>
+            <button class="tab-btn" data-tab="leaderboard">🏆 Hall of Fame</button>
+        </div>
+
+        <main id="main-content">
+
+            <!-- ===== TIMER TAB ===== -->
+            <section id="timer-tab" class="tab-content active">
+                <div class="timer-section">
+
+                    <!-- Styled Focus Topic Input -->
+                    <div class="focus-input-wrapper">
+                        <div class="focus-input-label">
+                            <span class="focus-icon">🎯</span>
+                            <span>What are you focusing on today?</span>
+                        </div>
+                        <div class="focus-input-inner">
+                            <input type="text" id="timer-input" class="focus-input"
+                                placeholder="e.g. Calculus Chapter 5, Essay Draft...">
+                            <div class="focus-input-glow"></div>
+                        </div>
+                        <div class="focus-suggestions">
+                            <span class="suggest-chip" onclick="setFocusTopic(this)">📐 Math</span>
+                            <span class="suggest-chip" onclick="setFocusTopic(this)">🔬 Science</span>
+                            <span class="suggest-chip" onclick="setFocusTopic(this)">📝 Essay</span>
+                            <span class="suggest-chip" onclick="setFocusTopic(this)">💻 Coding</span>
+                            <span class="suggest-chip" onclick="setFocusTopic(this)">📚 Reading</span>
+                            <span class="suggest-chip" onclick="setFocusTopic(this)">🌍 History</span>
+                        </div>
+                    </div>
+
+                    <div class="timer-settings">
+                        <button class="setting-chip active" data-time="25">25:00</button>
+                        <button class="setting-chip" data-time="50">50:00</button>
+                        <button class="setting-chip" data-time="5">Short Break</button>
+                        <button class="setting-chip" data-time="15">Long Break</button>
+                    </div>
+
+                    <div class="timer-display" id="display">25:00</div>
+
+                    <div class="timer-controls">
+                        <button id="start-btn" class="btn btn-primary">▶ Start Focus</button>
+                        <button id="reset-btn" class="btn btn-secondary">↺ Reset</button>
+                    </div>
+
+                    <div id="focus-status" style="margin-top: 2rem; color: var(--text-muted); opacity: 0;">
+                        Focus mode active. Don't leave this page!
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== DASHBOARD TAB ===== -->
+            <section id="dashboard-tab" class="tab-content">
+                <div class="dashboard-grid">
+                    <div class="stat-card glass-morphism">
+                        <div class="stat-icon">🔥</div>
+                        <h3>Daily Streak</h3>
+                        <div class="stat-value" id="streak-val">0</div>
+                        <p>Days in a row</p>
+                    </div>
+                    <div class="stat-card glass-morphism">
+                        <div class="stat-icon">⏱</div>
+                        <h3>Focus Time</h3>
+                        <div class="stat-value" id="total-time-val">0</div>
+                        <p>Minutes total</p>
+                    </div>
+                    <div class="stat-card glass-morphism">
+                        <div class="stat-icon">🎮</div>
+                        <h3>Quizzes Won</h3>
+                        <div class="stat-value" id="quizzes-won-val">0</div>
+                        <p>Keep training!</p>
+                    </div>
+                </div>
+
+                <div class="quote-container glass-morphism">
+                    <p id="motivational-quote">"The secret of getting ahead is getting started."</p>
+                </div>
+            </section>
+
+            <!-- ===== QUIZ TAB ===== -->
+            <section id="quiz-tab" class="tab-content">
+                <div class="quiz-menu-header">
+                    <h2>⚔️ Quest Game</h2>
+                    <p>Choose your challenge mode</p>
+                </div>
+
+                <!-- Quiz Mode Selection -->
+                <div id="quiz-mode-selection" class="quiz-mode-grid">
+                    <div class="quiz-mode-card glass-morphism" id="flappy-mode-card">
+                        <div class="quiz-mode-icon">🐦</div>
+                        <h3>Flappy Challenge</h3>
+                        <p>Control the bird with your face! Dodge pipes, answer questions.</p>
+                        <div class="quiz-mode-tags">
+                            <span class="mode-tag tag-hard">🎥 Camera Required</span>
+                            <span class="mode-tag tag-fun">🤩 Fun</span>
+                        </div>
+                        <button class="btn btn-primary" id="start-flappy-btn">Play Now</button>
+                    </div>
+
+                    <div class="quiz-mode-card glass-morphism featured" id="trial-mode-card">
+                        <div class="quiz-mode-badge">⭐ STREAK BOOST</div>
+                        <div class="quiz-mode-icon">⚡</div>
+                        <h3>Trial Quiz</h3>
+                        <p>Quick 5-question quiz. Pass to maintain or grow your study streak!</p>
+                        <div class="quiz-mode-tags">
+                            <span class="mode-tag tag-easy">🟢 No Camera</span>
+                            <span class="mode-tag tag-streak">🔥 Streak Option</span>
+                        </div>
+                        <button class="btn btn-primary" id="start-trial-btn">Take Quiz</button>
+                    </div>
+
+                    <div class="quiz-mode-card glass-morphism" id="leaderboard-mode-card">
+                        <div class="quiz-mode-icon">🏆</div>
+                        <h3>Leaderboard</h3>
+                        <p>Compare your performance with the top players globally.</p>
+                        <div class="quiz-mode-tags">
+                            <span class="mode-tag tag-info">📊 Rankings</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="switchToTab('leaderboard')">View Board</button>
+                    </div>
+                </div>
+
+                <!-- Flappy Quiz Game UI (hidden until started) -->
+                <div id="flappy-game-ui" class="quiz-container glass-morphism"
+                    style="display:none; position: relative; overflow: hidden; height: 520px; flex-direction: column; align-items: center; justify-content: center;">
+                    <button class="back-btn" id="back-from-flappy">← Back to Menu</button>
+                    <div id="quiz-start-screen" style="text-align: center; padding: 2rem;">
+                        <h2>Flappy Quiz</h2>
+                        <p style="color: var(--text-muted); margin: 1rem 0;">Tilt your head up to flap. Dodge pipes,
+                            answer questions!</p>
+                        <button id="start-quiz-btn" class="btn btn-primary">🎮 Start Game</button>
+                    </div>
+                    <div id="game-ui" style="display: none; width: 100%; height: 100%; position: relative;">
+                        <canvas id="gameCanvas" width="800" height="460"
+                            style="display: block; background: #070b14; max-width: 100%; border-radius: 1rem;"></canvas>
+                        <div id="question-overlay"
+                            style="position: absolute; top: 20px; left: 0; right: 0; text-align: center; color: white; font-weight: 800; font-size: 1.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                            What is 5 + 5?
+                        </div>
+                    </div>
+                    <div id="face-status"
+                        style="position: absolute; bottom: 10px; left: 10px; font-size: 0.8rem; color: var(--text-muted);">
+                        Camera: <span id="camera-status">Initializing...</span>
+                    </div>
+                    <video id="webcam" style="display: none;" autoplay playsinline></video>
+                </div>
+
+                <!-- Trial Quiz UI (hidden until started) -->
+                <div id="trial-game-ui" style="display:none;">
+                    <div class="trial-quiz-wrapper glass-morphism">
+                        <div class="trial-header">
+                            <button class="back-btn" id="back-from-trial">← Back to Menu</button>
+                            <div class="trial-progress-bar">
+                                <div id="trial-progress-fill" class="trial-progress-fill"></div>
+                            </div>
+                            <span id="trial-q-num" class="trial-q-num">1 / 5</span>
+                        </div>
+                        <div id="trial-question-box">
+                            <div class="trial-streak-option">
+                                <label class="streak-toggle">
+                                    <input type="checkbox" id="streak-option-check" checked>
+                                    <span class="streak-toggle-label">🔥 Streak Mode (pass to update streak)</span>
+                                </label>
+                            </div>
+                            <h3 id="trial-question" class="trial-question-text">Loading question...</h3>
+                            <div id="trial-options" class="trial-options-grid"></div>
+                        </div>
+                        <div id="trial-result-box" style="display:none; text-align:center; padding: 2rem;">
+                            <div class="trial-result-icon" id="trial-result-icon">🎉</div>
+                            <h2 id="trial-result-title">Quiz Complete!</h2>
+                            <p id="trial-result-desc" style="color:var(--text-muted); margin: 1rem 0;"></p>
+                            <div class="trial-score-display"><span id="trial-final-score">0</span> / 5</div>
+                            <button class="btn btn-primary" id="retry-trial-btn" style="margin-top:1.5rem;">Try
+                                Again</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SOCIAL TAB ===== -->
+            <section id="social-tab" class="tab-content">
+                <div class="social-header">
+                    <h2>👥 Social Hub</h2>
+                    <p style="color: var(--text-muted);">Invite friends and compete in challenges</p>
+                </div>
+
+                <div class="social-grid">
+                    <!-- Invite Friends Card -->
+                    <div class="social-card glass-morphism">
+                        <h3 class="social-card-title">➕ Invite a Friend</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.2rem;">Add them by email
+                            address to compare streaks and send challenges.</p>
+                        <div class="invite-input-row">
+                            <input type="email" id="friend-email" class="social-input" placeholder="friend@example.com">
+                            <button id="add-friend-btn" class="btn btn-primary">Add</button>
+                        </div>
+                        <div id="invite-status" class="invite-status-msg" style="display:none;"></div>
+                    </div>
+
+                    <!-- My Friends List -->
+                    <div class="social-card glass-morphism">
+                        <h3 class="social-card-title">🤝 Friends</h3>
+                        <div id="friends-list">
+                            <div class="social-empty-state">
+                                <div style="font-size:2.5rem;">👤</div>
+                                <p>No friends yet. Invite someone above!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Send Challenge Card -->
+                    <div class="social-card glass-morphism">
+                        <h3 class="social-card-title">⚡ Send a Challenge</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.2rem;">Challenge a friend
+                            to a timed study session.</p>
+                        <input type="text" id="challenge-uid" class="social-input" style="margin-bottom:0.75rem;"
+                            placeholder="Friend's UID">
+                        <div class="challenge-options-row">
+                            <input type="number" id="challenge-duration" class="social-input"
+                                placeholder="Duration (min)" min="5" max="120">
+                            <input type="text" id="challenge-topic" class="social-input" placeholder="Topic (optional)">
+                        </div>
+                        <button id="send-challenge-btn" class="btn btn-primary"
+                            style="width:100%; margin-top:0.75rem;">⚡ Send Challenge</button>
+                        <div id="challenge-status" class="invite-status-msg" style="display:none;"></div>
+                    </div>
+
+                    <!-- Incoming Challenges Card -->
+                    <div class="social-card glass-morphism">
+                        <h3 class="social-card-title">📬 Incoming Challenges</h3>
+                        <div id="challenges-list">
+                            <div class="social-empty-state">
+                                <div style="font-size:2.5rem;">📭</div>
+                                <p>No challenges right now.</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary" id="refresh-challenges-btn"
+                            style="width:100%; margin-top:1rem;">↺ Refresh</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== LEADERBOARD TAB ===== -->
+            <section id="leaderboard-tab" class="tab-content">
+                <div class="leaderboard-card glass-morphism">
+                    <h2 class="section-title">🏆 Hall of Fame</h2>
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>User</th>
+                                <th>Study Time (m)</th>
+                                <th>Streak</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ===== FOCUS LOCK OVERLAY ===== -->
+    <div id="focus-lock-overlay">
+        <svg width="0" height="0" style="position:absolute">
+            <defs>
+                <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#818cf8" />
+                    <stop offset="100%" stop-color="#c084fc" />
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <div class="lock-icon">🔒</div>
+        <h2>Deep Focus Mode</h2>
+        <div class="lock-topic" id="lock-topic-label">Studying...</div>
+
+        <div class="lock-progress-ring">
+            <svg width="180" height="180" viewBox="0 0 180 180">
+                <circle class="ring-bg" cx="90" cy="90" r="82" />
+                <circle class="ring-fill" id="lock-ring" cx="90" cy="90" r="82" stroke-dasharray="515.2"
+                    stroke-dashoffset="0" />
+            </svg>
+            <div class="ring-time" id="lock-display">25:00</div>
+        </div>
+
+        <p>Stay on task. Every other app is paused until your session ends.</p>
+
+        <div class="lock-actions">
+            <button id="lock-give-up-btn">Give Up Session</button>
+        </div>
+    </div>
+
+    <!-- Escape warning toast -->
+    <div id="escape-warning">🚫 Stay focused! Switching away pauses your momentum.</div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <!-- MediaPipe Vision SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.mjs" type="module"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAwyDkM35LGoLwqXmxHUlv3gaNcd8f4riw",
+            authDomain: "focus-fun-b4047.firebaseapp.com",
+            projectId: "focus-fun-b4047",
+            storageBucket: "focus-fun-b4047.firebasestorage.app",
+            messagingSenderId: "179204372294",
+            appId: "1:179204372294:web:d6e9f9945a4432c4805747",
+            measurementId: "G-SK79ET5KW7"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        const userNav = document.getElementById('user-nav');
+
+        firebase.auth().onAuthStateChanged(async user => {
+            if (user) {
+                userNav.innerHTML = `
+                    <span class="user-welcome">👋 ${user.displayName || user.email.split('@')[0]}</span>
+                    <button class="btn btn-secondary" onclick="firebase.auth().signOut()">Logout</button>
+                `;
+                const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    const data = userDoc.data();
+                    document.getElementById('streak-val').textContent = data.streak || 0;
+                    document.getElementById('total-time-val').textContent = data.totalStudyTime || 0;
+                    document.getElementById('quizzes-won-val').textContent = data.totalQuizzes || 0;
+                }
+            } else {
+                userNav.innerHTML = `<button class="btn btn-secondary" onclick="window.location.href='/auth'">Login</button>`;
+            }
+        });
+
+        // Tab Switching Logic
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        function switchToTab(tabName) {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+            const targetContent = document.getElementById(`${tabName}-tab`);
+            if (targetBtn) targetBtn.classList.add('active');
+            if (targetContent) targetContent.classList.add('active');
+            if (tabName === 'leaderboard') fetchLeaderboard();
+            if (tabName === 'social') { fetchFriends(); fetchChallenges(); }
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => switchToTab(btn.dataset.tab));
+        });
+
+        // Focus topic chip suggestions
+        function setFocusTopic(el) {
+            const input = document.getElementById('timer-input');
+            input.value = el.textContent.replace(/^[^\w]+/, '').trim();
+            input.focus();
+            document.querySelectorAll('.suggest-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Quiz Mode Selection
+        document.getElementById('start-flappy-btn').addEventListener('click', () => {
+            document.getElementById('quiz-mode-selection').style.display = 'none';
+            document.getElementById('flappy-game-ui').style.display = 'flex';
+        });
+
+        document.getElementById('back-from-flappy').addEventListener('click', () => {
+            document.getElementById('quiz-mode-selection').style.display = 'grid';
+            document.getElementById('flappy-game-ui').style.display = 'none';
+        });
+
+        document.getElementById('start-trial-btn').addEventListener('click', () => {
+            document.getElementById('quiz-mode-selection').style.display = 'none';
+            document.getElementById('trial-game-ui').style.display = 'block';
+            startTrialQuiz();
+        });
+
+        document.getElementById('back-from-trial').addEventListener('click', () => {
+            document.getElementById('quiz-mode-selection').style.display = 'grid';
+            document.getElementById('trial-game-ui').style.display = 'none';
+        });
+
+        document.getElementById('retry-trial-btn').addEventListener('click', () => {
+            document.getElementById('trial-result-box').style.display = 'none';
+            document.getElementById('trial-question-box').style.display = 'block';
+            startTrialQuiz();
+        });
+
+        // ===== TRIAL QUIZ LOGIC =====
+        const trialQuestions = [
+            { q: "What is 12 × 8?", options: [96, 88, 104, 92], answer: 96 },
+            { q: "Which planet is closest to the sun?", options: ["Venus", "Mercury", "Mars", "Earth"], answer: "Mercury" },
+            { q: "What is the square root of 144?", options: [10, 12, 14, 16], answer: 12 },
+            { q: "In what year did World War II end?", options: [1943, 1944, 1945, 1946], answer: 1945 },
+            { q: "What does 'HTML' stand for?", options: ["HyperText Markup Language", "HyperText Machine Language", "HighText Markup Language", "HyperTool Markup Language"], answer: "HyperText Markup Language" },
+        ];
+
+        let trialState = { currentQ: 0, score: 0, answered: false };
+
+        function startTrialQuiz() {
+            trialState = { currentQ: 0, score: 0, answered: false };
+            showTrialQuestion();
+        }
+
+        function showTrialQuestion() {
+            const q = trialQuestions[trialState.currentQ];
+            document.getElementById('trial-question').textContent = q.q;
+            document.getElementById('trial-q-num').textContent = `${trialState.currentQ + 1} / ${trialQuestions.length}`;
+            document.getElementById('trial-progress-fill').style.width = `${(trialState.currentQ / trialQuestions.length) * 100}%`;
+
+            const optGrid = document.getElementById('trial-options');
+            optGrid.innerHTML = '';
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'trial-option-btn';
+                btn.textContent = opt;
+                btn.addEventListener('click', () => handleTrialAnswer(btn, opt, q.answer));
+                optGrid.appendChild(btn);
+            });
+            trialState.answered = false;
+        }
+
+        function handleTrialAnswer(btn, selected, correct) {
+            if (trialState.answered) return;
+            trialState.answered = true;
+
+            const optGrid = document.getElementById('trial-options');
+            Array.from(optGrid.children).forEach(b => {
+                b.disabled = true;
+                if (b.textContent == correct) b.classList.add('correct');
+                else if (b === btn) b.classList.add('wrong');
+            });
+
+            if (selected == correct) trialState.score++;
+
+            setTimeout(() => {
+                trialState.currentQ++;
+                if (trialState.currentQ < trialQuestions.length) {
+                    showTrialQuestion();
+                } else {
+                    finishTrialQuiz();
+                }
+            }, 900);
+        }
+
+        async function finishTrialQuiz() {
+            const streakOption = document.getElementById('streak-option-check').checked;
+            const score = trialState.score;
+            const total = trialQuestions.length;
+            const passed = score >= Math.ceil(total / 2);
+
+            document.getElementById('trial-question-box').style.display = 'none';
+            document.getElementById('trial-result-box').style.display = 'block';
+            document.getElementById('trial-progress-fill').style.width = '100%';
+            document.getElementById('trial-final-score').textContent = score;
+            document.getElementById('trial-result-icon').textContent = passed ? '🎉' : '😢';
+            document.getElementById('trial-result-title').textContent = passed ? 'You Passed!' : 'Better luck next time!';
+
+            let desc = `You got ${score} out of ${total} correct.`;
+            if (streakOption && passed) desc += ' 🔥 Streak updated!';
+            else if (streakOption && !passed) desc += ' Streak not updated — you need to pass to maintain it.';
+            document.getElementById('trial-result-desc').textContent = desc;
+
+            // Save to backend
+            try {
+                const user = firebase.auth().currentUser;
+                if (user) {
+                    const idToken = await user.getIdToken();
+                    await fetch('/api/quiz/trial', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+                        body: JSON.stringify({ score, totalQuestions: total, streakOption })
+                    });
+                }
+            } catch (e) {
+                console.error("Error saving trial quiz:", e);
+            }
+        }
+
+        // ===== SOCIAL LOGIC =====
+        async function fetchFriends() {
+            try {
+                const user = firebase.auth().currentUser;
+                if (!user) return;
+                const idToken = await user.getIdToken();
+                const response = await fetch('/api/friends', { headers: { 'Authorization': `Bearer ${idToken}` } });
+                if (response.ok) {
+                    const friends = await response.json();
+                    const list = document.getElementById('friends-list');
+                    if (friends.length === 0) {
+                        list.innerHTML = '<div class="social-empty-state"><div style="font-size:2.5rem;">👤</div><p>No friends yet. Invite someone!</p></div>';
+                        return;
+                    }
+                    list.innerHTML = friends.map(f => `
+                        <div class="friend-row">
+                            <div class="friend-avatar">${(f.username || 'U')[0].toUpperCase()}</div>
+                            <div class="friend-info">
+                                <div class="friend-name">${f.username}</div>
+                                <div class="friend-meta">⏱ ${f.totalStudyTime || 0}m total</div>
+                            </div>
+                            <div class="friend-streak">${f.streak || 0} 🔥</div>
+                        </div>
+                    `).join('');
+                }
+            } catch (e) { console.error("Error fetching friends:", e); }
+        }
+
+        async function fetchChallenges() {
+            try {
+                const user = firebase.auth().currentUser;
+                if (!user) return;
+                const idToken = await user.getIdToken();
+                const response = await fetch('/api/friends/challenges', { headers: { 'Authorization': `Bearer ${idToken}` } });
+                if (response.ok) {
+                    const challenges = await response.json();
+                    const list = document.getElementById('challenges-list');
+                    if (challenges.length === 0) {
+                        list.innerHTML = '<div class="social-empty-state"><div style="font-size:2.5rem;">📭</div><p>No challenges right now.</p></div>';
+                        return;
+                    }
+                    list.innerHTML = challenges.map(c => `
+                        <div class="challenge-row glass-morphism">
+                            <div>
+                                <div class="challenge-from">From: <strong>${c.fromName}</strong></div>
+                                <div class="challenge-detail">📘 ${c.topic} — ⏱ ${c.duration}min</div>
+                            </div>
+                            <div class="challenge-actions">
+                                <button class="btn-chip green" onclick="respondChallenge('${c.id}', 'accepted')">✅</button>
+                                <button class="btn-chip red" onclick="respondChallenge('${c.id}', 'declined')">❌</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (e) { console.error("Error fetching challenges:", e); }
+        }
+
+        async function respondChallenge(id, action) {
+            try {
+                const user = firebase.auth().currentUser;
+                if (!user) return;
+                const idToken = await user.getIdToken();
+                await fetch(`/api/friends/challenges/${id}/respond`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+                    body: JSON.stringify({ action })
+                });
+                fetchChallenges();
+            } catch (e) { console.error("Error responding to challenge:", e); }
+        }
+
+        document.getElementById('add-friend-btn').addEventListener('click', async () => {
+            const emailInput = document.getElementById('friend-email');
+            const friendEmail = emailInput.value.trim();
+            const statusEl = document.getElementById('invite-status');
+            if (!friendEmail) return;
+            try {
+                const user = firebase.auth().currentUser;
+                const idToken = await user.getIdToken();
+                const response = await fetch('/api/friends/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+                    body: JSON.stringify({ friendEmail })
+                });
+                const data = await response.json();
+                statusEl.style.display = 'block';
+                statusEl.className = 'invite-status-msg ' + (response.ok ? 'success' : 'error');
+                statusEl.textContent = response.ok ? '✅ Friend added!' : `❌ ${data.error}`;
+                if (response.ok) { emailInput.value = ''; fetchFriends(); }
+            } catch (e) {
+                statusEl.style.display = 'block';
+                statusEl.className = 'invite-status-msg error';
+                statusEl.textContent = '❌ Request failed.';
+            }
+        });
+
+        document.getElementById('send-challenge-btn').addEventListener('click', async () => {
+            const toUid = document.getElementById('challenge-uid').value.trim();
+            const duration = document.getElementById('challenge-duration').value;
+            const topic = document.getElementById('challenge-topic').value.trim();
+            const statusEl = document.getElementById('challenge-status');
+            if (!toUid || !duration) { alert('Please fill in UID and Duration'); return; }
+            try {
+                const user = firebase.auth().currentUser;
+                const idToken = await user.getIdToken();
+                const response = await fetch('/api/friends/challenge', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+                    body: JSON.stringify({ toUid, duration: parseInt(duration), topic })
+                });
+                const data = await response.json();
+                statusEl.style.display = 'block';
+                statusEl.className = 'invite-status-msg ' + (response.ok ? 'success' : 'error');
+                statusEl.textContent = response.ok ? '⚡ Challenge sent!' : `❌ ${data.error}`;
+            } catch (e) {
+                statusEl.style.display = 'block';
+                statusEl.className = 'invite-status-msg error';
+                statusEl.textContent = '❌ Request failed.';
+            }
+        });
+
+        document.getElementById('refresh-challenges-btn').addEventListener('click', fetchChallenges);
+
+        async function fetchLeaderboard() {
+            try {
+                const response = await fetch('/api/quiz/leaderboard');
+                if (response.ok) {
+                    const data = await response.json();
+                    const body = document.getElementById('leaderboard-body');
+                    body.innerHTML = data.map((user, i) => `
+                        <tr>
+                            <td>${['🥇', '🥈', '🥉'][i] || (i + 1)}</td>
+                            <td>${user.username}</td>
+                            <td>${user.totalStudyTime}</td>
+                            <td>${user.streak} 🔥</td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) { console.error("Error fetching leaderboard:", e); }
+        }
+    </script>
+    <script src="/js/timer.js"></script>
+    <script src="/js/quiz.js" type="module"></script>
+</body>
+
+</html>
