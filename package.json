@@ -2,11 +2,11 @@
     "name": "focusfun-project",
     "version": "1.0.0",
     "description": "Gamified study web app",
-    "main": "server/app.js",
+    "main": "app/app.js",
     "scripts": {
-        "start": "node server/app.js",
-        "dev": "node --watch server/app.js",
-        "server": "cd server && node app.js",
+        "start": "node app/app.js",
+        "dev": "node --watch app/app.js",
+        "server": "cd app && node app.js",
         "client": "echo 'Client is hosted by server. Go to http://localhost:5000'"
     },
     "dependencies": {
